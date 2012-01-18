@@ -16,5 +16,29 @@
 #    under the License.
 
 from keystoneclient.v2_0 import client
+from keystoneclient import utils
 
 CLIENT_CLASS = client.Client
+
+
+def do_user_list(kc, args):
+    users = kc.users.list(tenant_id=args.tenant_id)
+    utils.print_list(users, ['id', 'enabled', 'email', 'name', 'tenantId'])
+
+
+# TODO this is broken
+@utils.arg('username', metavar='<username>', nargs='?')
+@utils.arg('password', metavar='<password>', nargs='?')
+@utils.arg('email', metavar='<email>', nargs='?')
+@utils.arg('default_tenant', metavar='<default_tenant', nargs='?')
+@utils.arg('enabled', metavar='<enabled', nargs='?', default=True)
+def do_user_create(kc, args):
+    user = kc.users.create(args.name, args.password, args.email,
+                           tenant_id=args.default_tenant, enabled=args.enabled)
+
+    print "###", user, "###"
+    print "===", args.__dict__, "###"
+
+def do():
+    """docstring for do"""
+    pass

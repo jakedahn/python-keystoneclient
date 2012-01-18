@@ -167,7 +167,7 @@ class OpenStackIdentityShell(object):
             tenant_name=args.tenant_name,
             tenant_id=args.tenant_id,
             password=args.password,
-            auth_url=args.auth_url,
+            auth_url=args.url,
             region_name=args.region_name)
 
         try:
@@ -182,7 +182,7 @@ class OpenStackIdentityShell(object):
     def get_api_class(self, version):
         try:
             return {
-                "2.0": shell_v2_0.CLIENT_CLASS,
+                "v2_0": shell_v2_0.CLIENT_CLASS,
             }[version]
         except KeyError:
             return shell_v2_0.CLIENT_CLASS
